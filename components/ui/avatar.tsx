@@ -33,16 +33,42 @@ AvatarImage.displayName = AvatarPrimitive.Image.displayName
 const AvatarFallback = React.forwardRef<
   React.ElementRef<typeof AvatarPrimitive.Fallback>,
   React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Fallback>
->(({ className, ...props }, ref) => (
-  <AvatarPrimitive.Fallback
-    ref={ref}
-    className={cn(
-      "flex h-full w-full items-center justify-center rounded-full bg-muted",
-      className
-    )}
-    {...props}
-  />
-))
+>(({ className, ...props }, ref) => {
+  const email = React.Children.toArray(props.children).join('');
+  const bgColorClass = getColorFromHash(hashString(email));
+  return (
+    <AvatarPrimitive.Fallback
+      ref={ref}
+      className={cn(
+        "flex h-full w-full items-center justify-center rounded-full",
+        bgColorClass,
+        className
+      )}
+      {...props}
+    />
+  )
+})
 AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName
 
 export { Avatar, AvatarImage, AvatarFallback }
+
+
+// Convert email string to a simple hash
+const hashString = (str: string) => {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash |= 0; // Convert to 32bit integer
+  }
+  return hash;
+};
+
+const getColorFromHash = (hash: number) => {
+  // An array of colors you want to choose from
+  const colors = ["bg-red-500/50", "bg-green-500/50", "bg-blue-500/50", "bg-yellow-500/50", "bg-purple-500/50"];
+
+  // Use the hash to get an index for the colors array
+  const index = Math.abs(hash) % colors.length;
+  return colors[index];
+};
