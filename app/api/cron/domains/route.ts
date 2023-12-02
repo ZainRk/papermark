@@ -17,7 +17,7 @@ import { log } from "@/lib/utils";
  **/
 // Runs once per day at 12pm (0 12 * * *)
 
-export const maxDuration = 300; // 5 minutes in seconds
+export const maxDuration = 10; // 5 minutes in seconds
 
 export async function POST(req: Request) {
   const body = await req.json();
