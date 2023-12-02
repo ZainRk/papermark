@@ -1,41 +1,18 @@
 import Footer from "@/components/web/footer";
 import Navbar from "@/components/web/navbar";
-import { Metadata } from "next";
-
-const data = {
-  description:
-    "Papermark is an open-source document infrastructure for sharing and collaboration. Free alternative to Docsend with custom domain. Manage secure document sharing with real-time analytics.",
-  title: "Papermark | The Open Source DocSend Alternative",
-  url: "https://www.papermark.io",
-};
-
-export const metadata: Metadata = {
-  title: data.title,
-  description: data.description,
+export const metadata = {
+  metadataBase: new URL('http://localhost:3000'),
+  alternates: {
+    canonical: '/',
+    languages: {
+      'en-US': '/en-US',
+      'de-DE': '/de-DE',
+    },
+  },
   openGraph: {
-    title: data.title,
-    description: data.description,
-    url: data.url,
-    siteName: "Papermark",
-    images: [
-      {
-        url: "https://www.papermark.io/_static/meta-image.png",
-        width: 800,
-        height: 600,
-      },
-    ],
-    locale: "en_US",
-    type: "website",
+    images: '/og-image.png',
   },
-  twitter: {
-    card: "summary_large_image",
-    title: data.title,
-    description: data.description,
-    creator: "@papermarkio",
-    images: ["https://www.papermark.io/_static/meta-image.png"],
-  },
-};
-
+}
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
